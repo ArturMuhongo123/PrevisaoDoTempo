@@ -1,0 +1,358 @@
+/* 🎨 VARIÁVEIS DE ESTILO (ROOT): define cores e valores reutilizáveis para modo claro */
+:root {
+  --bg-color: #f5f7fa;            /* Cor de fundo suave do corpo */
+  --text-color: #2c3e50;          /* Cor do texto principal (quase preto) */
+  --card-bg: #ffffff;             /* Fundo branco dos cartões (clima, previsão) */
+  --border-color: #e0e6ed;        /* Cor de bordas leves */
+  --shadow: rgba(0, 0, 0, 0.1);  /* Sombra suave para profundidade */
+  --accent: #3498db;              /* Cor de destaque (azul vibrante) */
+  --error-bg: #ffebee;            /* Fundo vermelho claro para mensagens de erro */
+  --error-text: #c62828;          /* Texto vermelho escuro para erros */
+}
+
+/* 🔧 RESET BÁSICO: remove margens/paddings padrão e padroniza o box model */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Largura/altura incluem padding e borda */
+}
+
+/* 🖼️ ESTILO DO CORPO PRINCIPAL */
+body {
+  /* Fonte moderna: Inter prioritária, com fallbacks seguros */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Gradiente de fundo suave, com transição suave */
+  background: linear-gradient(135deg, var(--bg-color) 0%, #e4edf9 100%);
+  color: var(--text-color);
+  line-height: 1.6; /* Espaçamento vertical legível */
+  padding: 24px;    /* Espaço interno da janela */
+  min-height: 100vh;/* Ocupa pelo menos toda a altura da tela */
+  /* Suaviza transição ao alternar tema (claro/escuro) */
+  transition: background 0.3s ease;
+}
+
+/* 🌙 MODIFICADORES DO MODO ESCURO */
+/* Quando a classe .dark-mode é adicionada ao <body>, estas variáveis sobrescrevem as de :root */
+body.dark-mode {
+  --bg-color: #121826;            /* Fundo azul-escuro profundo */
+  --text-color: #e0e6ed;          /* Texto claro (cinza suave) */
+  --card-bg: #1a2233;             /* Fundo dos cartões mais escuro */
+  --border-color: #374151;        /* Bordas cinza-escuro */
+  --shadow: rgba(0, 0, 0, 0.3);  /* Sombras mais intensas para contraste */
+  --error-bg: #370001;            /* Fundo de erro em vermelho quase preto */
+  --error-text: #ff5252;          /* Texto de erro em vermelho brilhante */
+  /* Gradiente adaptado ao modo escuro */
+  background: linear-gradient(135deg, var(--bg-color) 0%, #0f1420 100%);
+}
+
+/* 📦 CONTAINER PRINCIPAL: envolve todo o conteúdo da aplicação */
+.container {
+  max-width: 850px;               /* Largura máxima para conteúdo centralizado */
+  margin: 0 auto;                 /* Centraliza horizontalmente */
+  background: var(--card-bg);     /* Usa fundo do cartão (branco ou escuro) */
+  border-radius: 20px;            /* Bordas arredondadas elegantes */
+  padding: 28px;                  /* Espaço interno generoso */
+  /* Sombra leve para destacar do fundo */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  /* Animação suave em mudanças (ex: ao alternar tema) */
+  transition: all 0.3s ease;
+}
+
+/* 🌞/🌙 BOTÃO DE ALTERNÂNCIA DE TEMA */
+.theme-toggle {
+  position: absolute;             /* Posicionado fixo no canto superior direito */
+  top: 24px;
+  right: 24px;
+  background: var(--card-bg);     /* Mesmo fundo dos cartões */
+  border: 1px solid var(--border-color);
+  border-radius: 50%;             /* Formato circular */
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;                /* Mostra que é clicável */
+  /* Sombra sutil para realçar */
+  box-shadow: 0 2px 6px var(--shadow);
+  transition: all 0.3s ease;
+  z-index: 10;                    /* Fica acima de outros elementos */
+}
+
+/* Efeito divertido ao passar o mouse: leve rotação */
+.theme-toggle:hover {
+  transform: rotate(15deg);
+}
+
+/* 🏷️ ESTILO DO TÍTULO PRINCIPAL */
+h1 {
+  /* Degradê de cores (azul → verde) aplicado apenas ao texto */
+  background: linear-gradient(90deg, var(--accent), #00a05e);
+  -webkit-background-clip: text;  /* Suporte para WebKit (Chrome, Safari) */
+  background-clip: text;
+  color: transparent;             /* Texto "invisível" para revelar o degradê */
+  font-weight: 800;               /* Negrito extra */
+  font-size: 2.2rem;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+/* 📝 SUBTÍTULO DESCRITIVO */
+.subtitle {
+  text-align: center;
+  color: #6c757d;                 /* Cinza neutro, menos proeminente */
+  margin-bottom: 24px;
+  font-size: 1rem;
+}
+
+/* 🔍 FORMULÁRIO DE BUSCA */
+#weather-form {
+  display: flex;
+  gap: 10px;                      /* Espaço entre input e botão */
+  margin-bottom: 24px;
+  flex-wrap: wrap;                /* Permite quebrar em telas pequenas */
+  position: relative;
+  z-index: 1;                     /* Garante que fique acima de fundos */
+}
+
+/* ESTILO DO CAMPO DE TEXTO */
+#weather-form input {
+  flex: 1;                        /* Ocupa todo o espaço disponível */
+  padding: 12px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--card-bg);
+  color: var(--text-color);
+  font-size: 1rem;
+  outline: none;                  /* Remove contorno padrão ao focar */
+}
+
+/* ESTADO DE FOCO NO INPUT */
+#weather-form input:focus {
+  border-color: var(--accent);    /* Borda azul ao focar */
+  /* Destaque sutil em torno do campo */
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* BOTÃO DE BUSCA */
+#weather-form button {
+  padding: 0 20px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;                       /* Espaço entre texto e ícone */
+}
+
+/* EFEITO HOVER NO BOTÃO */
+#weather-form button:hover {
+  background: #2980b9;            /* Azul mais escuro ao passar mouse */
+  transform: translateY(-1px);    /* Leve elevação */
+}
+
+/* 🗺️ SEÇÃO DE CIDADES RÁPIDAS */
+.quick-cities {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.quick-cities p {
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+/* CONTAINER DOS BOTÕES DE CIDADES */
+#quick-cities-buttons {
+  display: flex;
+  flex-wrap: wrap;                /* Permite quebra em múltiplas linhas */
+  justify-content: center;        /* Centraliza os botões */
+  gap: 10px;                      /* Espaço entre botões */
+  margin-top: 6px;
+}
+
+/* ESTILO DOS BOTÕES DE CIDADE */
+.city-btn {
+  padding: 8px 16px;
+  background: rgba(52, 152, 219, 0.1); /* Azul transparente */
+  border: 1px solid var(--accent);
+  border-radius: 50px;            /* Borda arredondada (pills) */
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* EFEITO HOVER NOS BOTÕES DE CIDADE */
+.city-btn:hover {
+  background: rgba(52, 152, 219, 0.2); /* Azul um pouco mais opaco */
+  transform: translateY(-2px);    /* Leve elevação */
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2); /* Sombra sutil */
+}
+
+/* 🗂️ CARTÃO DE CLIMA ATUAL */
+.weather-card {
+  background: var(--card-bg);
+  border-radius: 18px;
+  padding: 28px;
+  margin-bottom: 30px;
+  box-shadow: 0 6px 16px var(--shadow);
+  border-left: 5px solid var(--accent); /* Borda esquerda colorida para destaque */
+  animation: fadeIn 0.5s ease;    /* Animação suave ao aparecer */
+}
+
+/* ANIMAÇÃO: FADE IN COM LEVE DESLOCAMENTO */
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(10px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* ESTILOS DENTRO DO CARTÃO */
+.location h2 {
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+}
+
+#date-time {
+  color: #7f8c8d;                 /* Cinza mais claro para data/hora */
+  font-size: 0.95rem;
+}
+
+/* LINHA PRINCIPAL: ÍCONE + TEMPERATURA + DESCRIÇÃO */
+.main-weather {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+/* ÍCONE DO CLIMA */
+#weather-icon {
+  width: 80px;
+  height: 80px;
+  /* Sombra leve para destacar do fundo */
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+/* TEMPERATURA PRINCIPAL */
+.temp {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+/* DETALHES (sensação, umidade, vento) */
+.details div {
+  margin: 8px 0;
+  font-size: 1rem;
+}
+
+/* 📊 LISTAS DE PREVISÃO (HORÁRIA E DIÁRIA) */
+.forecast-list {
+  display: grid;
+  /* Grade responsiva: cada item tem no mínimo 100px, mas cresce conforme espaço */
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+
+/* ITEM INDIVIDUAL DA PREVISÃO */
+.forecast-item {
+  background: var(--card-bg);
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 6px var(--shadow);
+  transition: transform 0.2s;
+}
+
+/* EFEITO HOVER NOS ITENS DE PREVISÃO */
+.forecast-item:hover {
+  transform: translateY(-3px);    /* Leve elevação */
+}
+
+/* ESTILO DO TEXTO DE HORA OU DIA */
+.forecast-time, .forecast-day {
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+  color: #7f8c8d;                 /* Cinza secundário */
+}
+
+/* TEMPERATURA NA PREVISÃO */
+.forecast-temp {
+  font-weight: bold;
+}
+
+/* ❌ ESTILO DA MENSAGEM DE ERRO */
+.error {
+  background: var(--error-bg);
+  color: var(--error-text);
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 20px;
+  /* Centraliza ícone e texto */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  animation: shake 0.5s;          /* Animação de "sacudida" ao aparecer */
+}
+
+/* ANIMAÇÃO: SACUDIDA (efeito de erro) */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+/* 🌀 INDICADOR DE CARREGAMENTO */
+.loading {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  color: #7f8c8d;
+  /* Centraliza ícone e texto */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* 🙈 UTILITÁRIO: ESCONDER ELEMENTOS COMPLETAMENTE */
+.hidden {
+  display: none !important; /* !important garante que não seja sobrescrito */
+}
+
+/* 📱 MEDIA QUERY: TELAS PEQUENAS (ex: smartphones) */
+@media (max-width: 600px) {
+  /* Coloca ícone e temperatura em coluna no clima atual */
+  .main-weather {
+    flex-direction: column;
+  }
+  /* Itens de previsão ficam um pouco menores */
+  .forecast-list {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+  .city-btn {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+  }
+  .container {
+    padding: 20px; /* Menos espaço interno */
+  }
+  .theme-toggle {
+    top: 16px;
+    right: 16px; /* Mais próximo da borda em telas pequenas */
+  }
+}
